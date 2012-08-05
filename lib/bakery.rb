@@ -9,12 +9,14 @@ module Bakery
     attr_accessor :options, :html, :source
 
     DEFAULT_OPTIONS = {
-      :remove_empty_nodes => true,
       :min_text_length => 80,
       :min_image_width => 150,
       :min_image_height => 100,
       :ignore_image_format => [],
-      :debug => true,
+
+      :remove_empty_nodes => true,
+
+      :debug => false,
     }.freeze
 
     REGEXES = {
