@@ -218,7 +218,7 @@ module Bakery
     end
 
     def write
-      File.open("./public/bakery_test.html", File::RDWR|File::CREAT|File::TRUNC) do |f|
+      File.open(File.join(File.dirname(__FILE__)), "bakery_test.html", File::RDWR|File::CREAT|File::TRUNC) do |f|
         f.puts @content
       end
     end
