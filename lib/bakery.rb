@@ -48,7 +48,7 @@ module Bakery
     def make_html
       @source.gsub!(REGEXES[:replace_whitespace], " ")
       @source.gsub!(REGEXES[:replace_brs], '<\p><p>')
-      @source.gsub(REGEXES[:replace_fonts], '<\1span>')
+      @source.gsub!(REGEXES[:replace_fonts], '<\1span>')
       @source.gsub!(REGEXES[:replace_comment], "")
       @html = Nokogiri::HTML(@source, nil, @options[:encoding])
     end

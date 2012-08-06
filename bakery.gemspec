@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
-  s.name = %q{Bakery}
-  s.version = "0.0.1"
+  s.name = %q{bakery}
+  s.version = "0.0.2"
   s.authors = ["Di Wu", "Siwon Choi"]
-  s.email = ["wudiac@gmail.com", ""]
+  s.email = ["wudiac@gmail.com", "bakery@coo.ki"]
   s.date = %q{2012-08-05}
   s.homepage = "http://coo.ki"
   s.summary = %q{Bakery From Coo.Ki}
