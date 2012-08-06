@@ -61,13 +61,13 @@ module Bakery
         elem.remove  if str =~ REGEXES[:impurities] && str !~ REGEXES[:no_impurities]
       end
 
-      @html.xpath('//text()').each do |node|
-        if node.content=~/\S/
-          node.content = node.content.strip
-        else
-          node.remove
-        end
-      end
+      # @html.xpath('//text()').each do |node|
+      #   if node.content=~/\S/
+      #     node.content = node.content.strip
+      #   else
+      #     node.remove
+      #   end
+      # end
 
     end
 
@@ -100,7 +100,7 @@ module Bakery
       end
 
       normalize_image
-      alternative_image
+      # alternative_image
 
       if @options[:remove_empty_nodes]
         # remove <p> tags that have no text content - this will also remove p tags that contain only images.
@@ -110,11 +110,16 @@ module Bakery
         end
       end
 
-      return '' if !@node || !@node.to_html || @node.to_html.empty? || @node.text.length < 450
+      if @node.text.length < 450
+        @content = ''
+      else
+        # Get rid of duplicate whitespace
+        @content = @node.to_html
+        @content.gsub!(/[\r\n\f]([ ]*)/, "\n").gsub!(/[\r\n\f]+/, "\n" ).gsub!(/[\t   ]+/, " ")
 
-      # Get rid of duplicate whitespace
-      @content = @node.to_html
-      @content.gsub!(/[\r\n\f]([ ]*)/, "\n").gsub!(/[\r\n\f]+/, "\n" ).gsub!(/[\t   ]+/, " ")
+        @content = '' if @content.length < 450
+
+      end
       write  if @options[:debug]
     end
 
@@ -132,9 +137,7 @@ module Bakery
       end
 
       @node.css('img').each do |el|
-
         el.remove and next unless el[:src]
-
         image = load_image(el)
         el.remove and next unless image
         el.remove and next unless image_meets_criteria?(image)
@@ -151,7 +154,7 @@ module Bakery
           image = load_image(el)
           if image
             el[:width] = image[:width].to_s; el[:height] = image[:height].to_s
-            if image[:width] >= 400 and image[:height] >= 400
+            if image[:width] >= 400 and image[:height] >= 200
               if not bigest_image
                 bigest_image = el
               else image[:width] > bigest_image[:width].to_i and image[:height] > bigest_image[:height].to_i
